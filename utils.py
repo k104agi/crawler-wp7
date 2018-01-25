@@ -29,31 +29,20 @@ def get_top100_list(refresh_html=False):
     os.makedirs(path_data_dir, exist_ok=True)
 
     # 1~50, 50~100위 웹페이지 주소
-    url_chart_realtime_50 = 'https://www.melon.com/chart/index.htm'
-    url_chart_realtime_100 = 'https://www.melon.com/chart/index.htm#params%5Bidx%5D=51'
+    url_chart_realtime = 'https://www.melon.com/chart/index.htm'
 
-
-    #50위, 100위 저장하기
+    #저장하기
     #'xt'모드와 try-except 모드를 쓸 경우
-    file_path = os.path.join(path_data_dir, 'chart_realtime_50.html')
+    file_path = os.path.join(path_data_dir, 'chart_realtime.html')
     try:
-        with open(file_path, 'wt') as f:
-            response = requests.get(url_chart_realtime_50)
+        file_mode = 'wt' if refresh_html else 'xt'
+        with open(file_path, file_mode) as f:
+            response = requests.get(url_chart_realtime)
             source = response.text
             f.write(source)
     except FileExistsError:
         print(f'"{file_path}" file already exists!')
 
-    #파일이 있는 경우를 검사 후 로직 실행
-    file_path2 = os.path.join(path_data_dir, 'chart_realtime_100.html')
-    #파일이 없을 경우
-    if not os.path.exists(file_path):
-        response = requests.get(url_chart_realtime_100)
-        source = response.text
-        with open(file_path2, 'wt') as f:
-            f.write(source)
-    else:
-        print(f'"{file_path}" file already exists!')
 
 
 
