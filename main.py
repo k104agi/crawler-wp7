@@ -1,9 +1,6 @@
-import re
-from bs4 import BeautifulSoup
-from utils import get_top100_list
-
-source = open('melon.html', 'rt').read()
-soup = BeautifulSoup(source, 'lxml')
+from utils_Backup import get_top100_list
 
 if __name__ == '__main__':
-    get_top100_list()
+    result = get_top100_list()
+    for item in result:
+        print(f'{item["rank"]:3}: {item["title"]}')
